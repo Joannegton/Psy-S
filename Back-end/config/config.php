@@ -1,5 +1,5 @@
 <?php
-
+//stmt - statement
 declare(strict_types=1);
 
 define("ROOT_PATH", __DIR__ . "/"); // __DIR__ é uma constante mágica que retorna o diretório do arquivo atual

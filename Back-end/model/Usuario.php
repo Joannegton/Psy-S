@@ -20,6 +20,25 @@ class Usuario
     }
 
     /**
+     * Recupera todos os usuários do banco de dados
+     *
+     * @return array Lista de usuários
+     */
+    public function listUser(): array
+    {
+        $sql = "SELECT * FROM usuario"; // Instrução SQL
+
+        try {
+            $stmt = $this->pdo->query($sql); // stmt - statement 
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Recupera todos os usuários 
+
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            return []; // Retorna um array vazio em caso de erro
+        }
+    }
+
+    /**
      * Criar um novo usuário
      *
      * @param string $nome Nome do usuário.
@@ -30,7 +49,7 @@ class Usuario
      */
     public function createUser($nome, $email, $senha): string
     {
-        $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)"; // Instrução SQL
+        $sql = "INSERT INTO usuario (nome, email, senha) VALUES (:nome, :email, :senha)"; // Instrução SQL
     
         try {
             $stmt = $this->pdo->prepare($sql); // Prepara a instrução SQL
@@ -43,6 +62,8 @@ class Usuario
     }
 
     
+
+
 
 
     
