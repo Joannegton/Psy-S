@@ -1,74 +1,87 @@
 <?php
-require_once __DIR__ . '/../config/config.php'; // Inclui o arquivo de configuração
+
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../model/Usuario.php';
 
 class UserController
 {
-    /**
-     * Endpoint '/api/v1/users/list' - recupera os usuarios
-     *
-     * @return 
-     */
-    public function listAction()
-    {
-        $requestMethod = $_SERVER["REQUEST_METHOD"]; // Recupera o método da requisição
+    private Usuario $usuarioModel;
 
-        if($requestMethod !== 'GET'){
-            http_response_code(405); // Método não permitido
+    /**
+     * Construtor da classe UserController.
+     * 
+     * @param Usuario $usuarioModel Instância do modelo de usuário.
+     */
+    public function __construct(Usuario $usuarioModel)
+    {
+        $this->usuarioModel = $usuarioModel;
+    }
+
+    /**
+     * Lista todos os usuários.
+     * 
+     * Responde com um código 200 e os dados dos usuários se encontrados,
+     * ou um código 404 se nenhum usuário for encontrado.
+     */
+    public function listAction(): void
+    {
+        if ($_SERVER["REQUEST_METHOD"] !== 'GET') {
+            http_response_code(405);
             echo json_encode(['message' => 'Método não permitido']);
             return;
         }
 
-        // Conectar ao banco de dados usando a classe Usuario
-        $userModel = new Usuario();
-        $usersArray = $userModel->listUser(); // Recupera todos os usuários
-        
-        if(empty($usersArray)){
-            http_response_code(500);
-            echo json_encode(['error' => 'Erro ao consultar SQL.']);
+        $usersArray = $this->usuarioModel->listUser();
+
+        if (empty($usersArray)) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Nenhum usuário encontrado.']);
             return;
         }
- 
+
         http_response_code(200);
         echo json_encode($usersArray);
     }
 
-
     /**
-     * Endpoint '/api/v1/users/create' - cria um novo usuário
+     * Cria um novo usuário.
+     * 
+     * Responde com um código 201 e uma mensagem de sucesso se o usuário for criado com sucesso,
+     * ou um código 500 se ocorrer um erro ao criar o usuário.
      */
-
-    public function createAction()
+    public function createAction(): void
     {
-        $requestMethod = $_SERVER["REQUEST_METHOD"]; // Recupera o método da requisição
-
-        if($requestMethod !== 'POST'){
-            http_response_code(405); // Método não permitido
+        if ($_SERVER["REQUEST_METHOD"] !== 'POST') {
+            http_response_code(405);
             echo json_encode(['message' => 'Método não permitido']);
             return;
         }
 
-        // Recupera os dados do corpo da requisição
         $data = json_decode(file_get_contents('php://input'), true);
 
-        // Verifica se os dados foram enviados
-        if(empty($data['nome']) || empty($data['email']) || empty($data['senha'])){
-            http_response_code(400); // Requisição inválida
-            echo json_encode(['message' => 'Dados inválidos']);
+        // Valida se todos os campos necessários foram preenchidos
+        if (empty($data['nome']) || empty($data['email']) || empty($data['senha'])) {
+            http_response_code(400);
+            echo json_encode(['message' => 'Dados inválidos. Todos os campos são obrigatórios.']);
             return;
         }
 
-        // Conectar ao banco de dados usando a classe Usuario
-        $usuarioModel = new Usuario();
-
-        // Criar um novo usuário
-        $result = $usuarioModel->createUser($data['nome'], $data['email'], $data['senha']);
-
-        if(strpos($result, 'Erro') !== false){
-            http_response_code(500); // Erro interno do servidor
+        // Valida se o email possui um formato válido
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            http_response_code(400);
+            echo json_encode(['message' => 'Email inválido.']);
+            return;
         }
 
-        http_response_code(201); // Criado
+        $result = $this->usuarioModel->createUser($data['nome'], $data['email'], $data['senha']);
+
+        if (strpos($result, 'Erro') !== false) {
+            http_response_code(500);
+            echo json_encode(['message' => $result]);
+            return;
+        }
+
+        http_response_code(201);
         echo json_encode(['message' => $result]);
     }
 }

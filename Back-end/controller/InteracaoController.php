@@ -1,55 +1,75 @@
 <?php
+
 require __DIR__ . '/../config/config.php';
 require __DIR__ . '/../model/Interacao.php';
 
+/**
+ * Controlador para gerenciar interações entre usuários e terapeutas.
+ */
 class InteracaoController
 {
+    private Interacao $interacaoModel;
+
     /**
-     * Endpoint '/api/v1/interacoes/send' - envia uma mensagem
+     * Construtor da classe InteracaoController.
      * 
-     * @param int $id_usuario ID do usuário que enviou a mensagem
-     * @param int $id_terapeuta ID do terapeuta que recebeu a mensagem
-     * @param string $mensagem Mensagem a ser enviada
-     * @param string $tipo Tipo da mensagem
-     * 
-     * @return string Mensagem de sucesso se a mensagem for enviada com sucesso ou mensagem de erro se falhar
+     * @param Interacao $interacaoModel Instância do modelo de interação.
      */
-    public function sendAction()
+    public function __construct(Interacao $interacaoModel)
+    {
+        $this->interacaoModel = $interacaoModel;
+    }
+
+    /**
+     * Endpoint '/api/v1/interacoes/send' - Envia uma mensagem.
+     * 
+     * @return void
+     */
+    public function sendAction(): void
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
+        // Verifica se o método é POST
         if ($requestMethod !== "POST") {
             http_response_code(405);
             echo json_encode(['message' => 'Método não permitido']);
             return;
         }
 
+        // Lê os dados enviados no corpo da requisição
         $data = json_decode(file_get_contents('php://input'), true);
 
-        if(empty($data['id_usuario']) || empty($data['id_terapeuta']) || empty($data['mensagem']) || empty($data['tipo'])){
+        // Valida os dados recebidos
+        if (empty($data['id_usuario']) || empty($data['id_terapeuta']) || empty($data['mensagem']) || empty($data['tipo'])) {
             http_response_code(400);
-            echo json_encode(['message', 'Dados invalidos']);
+            echo json_encode(['message' => 'Dados inválidos']);
             return;
         }
 
-        $interacaoModel = new Interacao();
+        // Tenta enviar a mensagem e verifica se houve sucesso
+        $result = $this->interacaoModel->sendMessage($data['id_usuario'], $data['id_terapeuta'], $data['mensagem'], $data['tipo']);
 
-        $result = $interacaoModel->sendMessage($data['id_usuario'], $data['id_terapeuta'], $data['mensagem'], $data['tipo']);
-
-        if($result === false){
+        if ($result === false || isset($result['error'])) {
             http_response_code(500);
+            echo json_encode(['message' => $result['error'] ?? 'Falha ao enviar a mensagem']);
+            return;
         }
 
-        http_response_code(201); // Criado
-        echo json_encode(['message' => $result]);
-
+        http_response_code(201); // Sucesso, recurso criado
+        echo json_encode(['message' => 'Mensagem enviada com sucesso']);
     }
 
-    public function listAction()
+    /**
+     * Endpoint '/api/v1/interacoes/list' - Lista as interações.
+     * 
+     * @return void
+     */
+    public function listAction(): void
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-        if($requestMethod !== 'GET'){
+        // Verifica se o método é GET
+        if ($requestMethod !== 'GET') {
             http_response_code(405);
             echo json_encode(['message' => 'Método não permitido']);
             return;
@@ -57,7 +77,7 @@ class InteracaoController
 
         // Captura os parâmetros da URL
         $id_usuario = isset($_GET['id_usuario']) ? (int)$_GET['id_usuario'] : null;
-        $id_terapeuta = isset($_GET['id_terapeuta']) ? (string)$_GET['id_terapeuta'] : null;
+        $id_terapeuta = isset($_GET['id_terapeuta']) ? $_GET['id_terapeuta'] : null;
 
         // Verifica se os parâmetros foram passados
         if ($id_usuario === null || $id_terapeuta === null) {
@@ -66,16 +86,16 @@ class InteracaoController
             return;
         }
 
-        $interacaoModel = new Interacao();
-        $messageArray = $interacaoModel->listInteracoes($id_usuario, $id_terapeuta);
+        $messageArray = $this->interacaoModel->listInteracoes($id_usuario, $id_terapeuta);
 
-        if(empty($messageArray)){
-            http_response_code(500);
-            echo json_encode(['error' => 'Erro ao consultar SQL.']);
+        // Verifica se houve erro ao buscar as interações
+        if (empty($messageArray)) {
+            http_response_code(404);
+            echo json_encode(['message' => 'Nenhuma interação encontrada']);
             return;
         }
 
-        http_response_code(200);
+        http_response_code(200); // Sucesso
         echo json_encode($messageArray);
     }
 }

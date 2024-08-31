@@ -1,35 +1,39 @@
 <?php
-//stmt - statement
+// stmt - statement
 declare(strict_types=1);
 
-//declaração das variáveis globais
-// Verifica se as constantes já estão definidas antes de defini-las
+// Verifica se as constantes já estão definidas para evitar redefinições
 if (!defined('ROOT_PATH')) {
-    define('ROOT_PATH', __DIR__ . "/"); // __DIR__ é uma constante mágica que retorna o diretório do arquivo atual
+    // Define o caminho raiz do aplicativo, que é o diretório onde este arquivo está localizado
+    define('ROOT_PATH', __DIR__ . "/");
 }
 
-if (!defined('dbDrive')) {
-    define('dbDrive', 'mysql'); //protocolo de acesso
+if (!defined('DB_DRIVE')) {
+    // Define o tipo de driver de banco de dados a ser usado (por exemplo, mysql, pgsql)
+    define('DB_DRIVE', 'mysql');
 }
 
-if (!defined('dbHost')) {
-    define('dbHost', 'localhost'); //endereço ou link do servidor
+if (!defined('DB_HOST')) {
+    // Define o endereço do servidor de banco de dados (geralmente 'localhost' para desenvolvimento local)
+    define('DB_HOST', 'localhost');
 }
 
-if (!defined('dbName')) {
-    define('dbName', 'psy_terapeuta_virtual'); //nome do seu Banco de dados (database)
+if (!defined('DB_NAME')) {
+    // Define o nome do banco de dados que será utilizado
+    define('DB_NAME', 'psy_terapeuta_virtual');
 }
 
-if (!defined('dbUser')) {
-    define('dbUser', 'root'); //login local
+if (!defined('DB_USER')) {
+    // Define o nome de usuário para acesso ao banco de dados
+    define('DB_USER', 'root');
 }
 
-if (!defined('dbPass')) {
-    define('dbPass', ''); //senha
+if (!defined('DB_PASS')) {
+    // Define a senha para acesso ao banco de dados (deixe em branco se não houver senha)
+    define('DB_PASS', '');
 }
 
 if (!defined('APP_NAME')) {
-    define('APP_NAME', 'Psy, seu Terapeuta Virtual');
+    // Define o nome do aplicativo
+    define('APP_NAME', 'Psy, Seu Terapeuta Virtual');
 }
-
-
