@@ -10,17 +10,26 @@ CREATE TABLE Usuario (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
+    id_terapeuta VARCHAR(255) NOT NULL UNIQUE,
     data_nascimento DATE NOT NULL,
     sexo ENUM('M', 'F', 'Outro') NOT NULL
+);
+
+-- Criação da tabela de Terapeuta
+CREATE TABLE Terapeuta (
+    id_terapeuta VARCHAR(100) NOT NULL UNIQUE,
+    nome_terapeuta VARCHAR(100) NOT NULL,
+    data_nascimento DATE 
 );
 
 -- Criação da tabela de Interações
 CREATE TABLE Interacao (
     id_interacao INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
+    id_terapeuta TEXT NOT NULL,
     data_hora DATETIME NOT NULL,
-    mensagem_usuario TEXT NOT NULL,
-    resposta_ia TEXT NOT NULL,
+    mensagem TEXT NOT NULL,
+    tipo ENUM('Usuario', 'Terapeuta') NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE
 );
 
@@ -51,3 +60,5 @@ CREATE TABLE Sugestao (
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (id_profissional) REFERENCES Profissional(id_profissional) ON DELETE CASCADE
 );
+
+

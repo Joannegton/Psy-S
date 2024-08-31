@@ -19,6 +19,48 @@ class Usuario
         }
     }
 
+    
+    public function createTerapeuta(): string
+    {
+        $sql = 'INSERT INTO terapeuta (id_terapeuta, nome_terapeuta) VALUES (:id_terapeuta, :nome_terapeuta)';
+    
+        $id_terapeuta = 'psy' . time() . rand(0, 50000);
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['id_terapeuta' => $id_terapeuta, 'nome_terapeuta' => "Psy"]);
+
+            return $id_terapeuta;
+        } catch (PDOException $e) {
+            return 'Erro ao criar Terapeuta: ' . $e->getMessage();
+        }
+    }
+
+
+    /**
+     * Criar um novo usuário
+     *
+     * @param string $nome Nome do usuário.
+     * @param string $email Endereço de e-mail do usuário.
+     * @param string $senha Senha do usuário, deve ser armazenada de forma segura (criptografada).
+     *
+     * @return string Mensagem de sucesso se o usuário for criado com sucesso ou mensagem de erro se falhar.
+     */
+    public function createUser(string $nome, string $email, string $senha): string
+    {
+        $sql = "INSERT INTO usuario (nome, email, senha, id_terapeuta) VALUES (:nome, :email, :senha, :id_terapeuta)"; // Instrução SQL
+    
+        $id_terapeuta = $this->createTerapeuta();
+
+        try {
+            $stmt = $this->pdo->prepare($sql); // Prepara a instrução SQL
+            $stmt->execute(['nome' => $nome, 'email' => $email, 'senha' => $senha, 'id_terapeuta' => $id_terapeuta]); // Executa a instrução SQL com os parâmetros
+    
+            return 'Usuário criado com sucesso!'; 
+        } catch (PDOException $e) {
+            return 'Erro ao criar usuário: ' . $e->getMessage();
+        }
+    }
+
     /**
      * Recupera todos os usuários do banco de dados
      *
@@ -37,29 +79,7 @@ class Usuario
             return []; // Retorna um array vazio em caso de erro
         }
     }
-
-    /**
-     * Criar um novo usuário
-     *
-     * @param string $nome Nome do usuário.
-     * @param string $email Endereço de e-mail do usuário.
-     * @param string $senha Senha do usuário, deve ser armazenada de forma segura (criptografada).
-     *
-     * @return string Mensagem de sucesso se o usuário for criado com sucesso ou mensagem de erro se falhar.
-     */
-    public function createUser($nome, $email, $senha): string
-    {
-        $sql = "INSERT INTO usuario (nome, email, senha) VALUES (:nome, :email, :senha)"; // Instrução SQL
     
-        try {
-            $stmt = $this->pdo->prepare($sql); // Prepara a instrução SQL
-            $stmt->execute(['nome' => $nome, 'email' => $email, 'senha' => $senha]); // Executa a instrução SQL com os parâmetros
-    
-            return 'Usuário criado com sucesso!'; 
-        } catch (PDOException $e) {
-            return 'Erro ao criar usuário: ' . $e->getMessage();
-        }
-    }
 
     
 
