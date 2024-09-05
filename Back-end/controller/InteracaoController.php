@@ -1,7 +1,9 @@
 <?php
 
+// Requer o arquivo de configuração e o modelo de Interação
 require __DIR__ . '/../config/config.php';
 require __DIR__ . '/../model/Interacao.php';
+require __DIR__ . '/../model/OpenAiGpt.php';
 
 /**
  * Controlador para gerenciar interações entre usuários e terapeutas.
@@ -25,29 +27,46 @@ class InteracaoController
      * 
      * @return void
      */
-    public function sendAction(): void
+    public function sendAction()
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-        // Verifica se o método é POST
         if ($requestMethod !== "POST") {
             http_response_code(405);
             echo json_encode(['message' => 'Método não permitido']);
             return;
         }
 
-        // Lê os dados enviados no corpo da requisição
         $data = json_decode(file_get_contents('php://input'), true);
 
-        // Valida os dados recebidos
-        if (empty($data['id_usuario']) || empty($data['id_terapeuta']) || empty($data['mensagem']) || empty($data['tipo'])) {
+        if (empty($data['id_usuario']) || empty($data['id_terapeuta']) || empty($data['mensagem'])) {
             http_response_code(400);
             echo json_encode(['message' => 'Dados inválidos']);
             return;
         }
 
-        // Tenta enviar a mensagem e verifica se houve sucesso
-        $result = $this->interacaoModel->sendMessage($data['id_usuario'], $data['id_terapeuta'], $data['mensagem'], $data['tipo']);
+        // Recupera o histórico de interações
+        $messageHistory = $this->interacaoModel->listInteracoes($data['id_usuario'], $data['id_terapeuta']);
+
+        // Verifica se houve interações anteriores
+        if (!empty($messageHistory)) {
+            // Obtém o horario da última mensagem
+            $lastMessage = end($messageHistory);
+            $lastMessageTimestamp = strtotime($lastMessage['data_hora']); 
+
+            // Verifica se 1 hora se passou desde a última mensagem
+            if (time() - $lastMessageTimestamp > 3600) {
+                // Zera o histórico se o tempo de inatividade for superior a 1 hora
+                $messageHistory = [];
+            }
+        }
+
+        // Envia a mensagem e o histórico para o ChatGPT
+        $chatGpt = new OpenAIChatGPT();
+        $chatGptResponse = $chatGpt->sendRequest($data['mensagem'], $messageHistory);
+
+        // Salva a mensagem do usuário no banco de dados
+        $result = $this->interacaoModel->sendMessage($data['id_usuario'], $data['id_terapeuta'], $data['mensagem'], 'Usuario');
 
         if ($result === false || isset($result['error'])) {
             http_response_code(500);
@@ -55,9 +74,27 @@ class InteracaoController
             return;
         }
 
-        http_response_code(201); // Sucesso, recurso criado
-        echo json_encode(['message' => 'Mensagem enviada com sucesso']);
+        // Verifica se houve erro na resposta do ChatGPT
+        if (isset($chatGptResponse['error']) || !isset($chatGptResponse['choices'][0]['message']['content'])) {
+            http_response_code(500);
+            echo json_encode(['message' => 'Falha ao obter resposta do ChatGPT', 'detalhes' => $chatGptResponse]);
+            return;
+        }
+
+        // Salva a resposta do ChatGPT no banco de dados
+        $chatGptMessage = $chatGptResponse['choices'][0]['message']['content'];
+        $result = $this->interacaoModel->sendMessage($data['id_usuario'], $data['id_terapeuta'], $chatGptMessage, 'Terapeuta');
+
+        if ($result === false || isset($result['error'])) {
+            http_response_code(500);
+            echo json_encode(['message' => $result['error'] ?? 'Falha ao salvar a resposta do ChatGPT']);
+            return;
+        }
+
+        http_response_code(201);
+        echo json_encode(['message' => 'Mensagem enviada com sucesso', 'resposta' => $chatGptMessage]);
     }
+
 
     /**
      * Endpoint '/api/v1/interacoes/list' - Lista as interações.
@@ -68,7 +105,7 @@ class InteracaoController
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-        // Verifica se o método é GET
+        // Verifica se o método da requisição é GET
         if ($requestMethod !== 'GET') {
             http_response_code(405);
             echo json_encode(['message' => 'Método não permitido']);
@@ -79,16 +116,17 @@ class InteracaoController
         $id_usuario = isset($_GET['id_usuario']) ? (int)$_GET['id_usuario'] : null;
         $id_terapeuta = isset($_GET['id_terapeuta']) ? $_GET['id_terapeuta'] : null;
 
-        // Verifica se os parâmetros foram passados
+        // Verifica se os parâmetros necessários foram passados
         if ($id_usuario === null || $id_terapeuta === null) {
             http_response_code(400);
             echo json_encode(['message' => 'Parâmetros de consulta faltando']);
             return;
         }
 
+        // Busca as interações entre o usuário e o terapeuta
         $messageArray = $this->interacaoModel->listInteracoes($id_usuario, $id_terapeuta);
 
-        // Verifica se houve erro ao buscar as interações
+        // Verifica se há interações para serem retornadas
         if (empty($messageArray)) {
             http_response_code(404);
             echo json_encode(['message' => 'Nenhuma interação encontrada']);
