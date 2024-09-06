@@ -86,6 +86,42 @@ class UserController
     }
 
     /**
+     * Atualiza um usuário.
+     * 
+     * Responde com um código 200 e uma mensagem de sucesso se o usuário for atualizado com sucesso,
+     * ou um código 500 se ocorrer um erro ao atualizar o usuário.
+     */
+    public function deleteAction(): void
+    {
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+        
+        if($requestMethod != "DELETE"){
+            http_response_code(405);
+            echo json_encode(['message' => 'Método não permitido']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if(empty($data['id_usuario']) || empty(['email'])){
+            http_response_code(400);
+            echo json_encode(['message' => 'Dados invalidos']);
+            return;
+        }
+
+        $result = $this->usuarioModel->excludeUser($data['id_usuario'], $data['email']);
+
+        if($result === false || isset($result['error'])){
+            http_response_code(500);
+            echo json_encode(['message' => $result['error'] ?? 'Falha ao deletar o usuário']);
+            return;
+        }
+
+        http_response_code(200);
+        echo json_encode(['message' => 'Usuário deletado com sucesso']);
+    }
+
+    /**
      * Faz login de um usuário.
      * 
      * Responde com um código 200 e os dados do usuário se o login for bem sucedido,

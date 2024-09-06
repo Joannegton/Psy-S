@@ -64,13 +64,14 @@ class Usuario
         }
     }
 
-    public function excludeUser(string $email): string
+    public function excludeUser(string $id_usuario, string $email): string
     {
-        $sql = "DELETE FROM usuario WHERE email = :email";
+        $sql = "DELETE FROM usuario WHERE id_usuario = :id_usuario AND email = :email";
 
         try {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['email' => $email]);
+            $stmt->execute(['id_usuario' => $id_usuario]);
             return 'Usuário excluído com sucesso!';
         } catch (PDOException $e) {
             error_log('Erro ao excluir usuário: ' . $e->getMessage());

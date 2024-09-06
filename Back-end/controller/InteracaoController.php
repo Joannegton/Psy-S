@@ -137,6 +137,11 @@ class InteracaoController
         echo json_encode($messageArray);
     }
 
+    /**
+     * Endpoint '/api/v1/interacoes/delete' - Deleta as interações.
+     * 
+     * @return void
+     */
     public function deleteAction()
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
