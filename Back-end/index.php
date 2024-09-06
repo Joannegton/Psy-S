@@ -3,8 +3,8 @@
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/controller/InteracaoController.php';
 require_once __DIR__ . '/controller/UserController.php';
-require_once __DIR__ . '/model/Interacao.php';
-require_once __DIR__ . '/model/Usuario.php';
+require_once __DIR__ . '/service/Interacao.php';
+require_once __DIR__ . '/service/Usuario.php';
 
 // Habilitar Cabeçalhos CORS:
 header("Access-Control-Allow-Origin: *");

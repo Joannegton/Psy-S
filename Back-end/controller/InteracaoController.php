@@ -2,8 +2,8 @@
 
 // Requer o arquivo de configuração e o modelo de Interação
 require __DIR__ . '/../config/config.php';
-require __DIR__ . '/../model/Interacao.php';
-require __DIR__ . '/../model/OpenAiGpt.php';
+require __DIR__ . '/../service/Interacao.php';
+require __DIR__ . '/../service/OpenAiGpt.php';
 
 /**
  * Controlador para gerenciar interações entre usuários e terapeutas.

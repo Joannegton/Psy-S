@@ -64,6 +64,20 @@ class Usuario
         }
     }
 
+    public function excludeUser(string $email): string
+    {
+        $sql = "DELETE FROM usuario WHERE email = :email";
+
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute(['email' => $email]);
+            return 'Usuário excluído com sucesso!';
+        } catch (PDOException $e) {
+            error_log('Erro ao excluir usuário: ' . $e->getMessage());
+            return 'Erro ao excluir usuário.';
+        }
+    }
+
     /**
      * Lista todos os usuários cadastrados.
      * 

@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../config/config.php';
-require_once __DIR__ . '/../model/Usuario.php';
+require_once __DIR__ . '/../service/Usuario.php';
 
 class UserController
 {
