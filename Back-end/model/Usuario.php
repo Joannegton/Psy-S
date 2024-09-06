@@ -81,4 +81,23 @@ class Usuario
             return [];
         }
     }
+
+
+    public function login(string $email, string $senha): array
+    {
+        $sql = "SELECT * FROM usuario WHERE email = :email";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            return ['error' => 'Usuário não encontrado.'];
+        }
+
+        if (!password_verify($senha, $user['senha'])) { 
+            return ['error' => 'Senha incorreta.'];
+        }
+
+        return $user;
+    }
 }

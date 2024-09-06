@@ -84,4 +84,39 @@ class UserController
         http_response_code(201);
         echo json_encode(['message' => $result]);
     }
+
+    /**
+     * Faz login de um usuário.
+     * 
+     * Responde com um código 200 e os dados do usuário se o login for bem sucedido,
+     * ou um código 404 se o usuário não for encontrado.
+     */
+    public function loginAction(): void
+    {
+        if ($_SERVER["REQUEST_METHOD"] !== 'POST') {
+            http_response_code(405);
+            echo json_encode(['message' => 'Método não permitido']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        // Valida se todos os campos necessários foram preenchidos
+        if (empty($data['email']) || empty($data['senha'])) {
+            http_response_code(400);
+            echo json_encode(['message' => 'Dados inválidos. Todos os campos são obrigatórios.']);
+            return;
+        }
+
+        $result = $this->usuarioModel->login($data['email'], $data['senha']);
+
+        if (isset($result['error'])) {
+            http_response_code(404);
+            echo json_encode($result);
+            return;
+        }
+
+        http_response_code(200);
+        echo json_encode($result);
+    }
 }
