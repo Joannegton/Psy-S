@@ -4,7 +4,7 @@
 class OpenAIChatGPT
 {
     // Chave da API e URL do endpoint do ChatGPT
-    private $api_key = "Sua chave api aqui";
+    private $api_key = "API aqui";
     private $api_url = "https://api.openai.com/v1/chat/completions";
 
     // Timeout para verificação de inatividade

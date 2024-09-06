@@ -93,4 +93,22 @@ class Interacao
             return [];
         }
     }
+
+    public function excludeListaInteracoes(int $id_usuario, string $id_terapeuta): array
+    {
+        $sql = "DELETE FROM interacao WHERE id_usuario = :user_id AND id_terapeuta = :therapist_id";
+        
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ':user_id' => $id_usuario,
+                ':therapist_id' => $id_terapeuta
+            ]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Log do erro para análise futura
+            error_log($e->getMessage(), 3, __DIR__ . '/../logs/error.log');
+            return [];
+        }
+    }
 }

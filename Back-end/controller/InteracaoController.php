@@ -136,4 +136,34 @@ class InteracaoController
         http_response_code(200); // Sucesso
         echo json_encode($messageArray);
     }
+
+    public function deleteAction()
+    {
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+
+        if ($requestMethod !== "DELETE") {
+            http_response_code(405);
+            echo json_encode(['message' => 'Método não permitido']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (empty($data['id_usuario']) || empty($data['id_terapeuta'])) {
+            http_response_code(400);
+            echo json_encode(['message' => 'Dados inválidos']);
+            return;
+        }
+
+        $result = $this->interacaoModel->excludeListaInteracoes($data['id_usuario'], $data['id_terapeuta']);
+
+        if ($result === false || isset($result['error'])) {
+            http_response_code(500);
+            echo json_encode(['message' => $result['error'] ?? 'Falha ao deletar as interações']);
+            return;
+        }
+
+        http_response_code(200);
+        echo json_encode(['message' => 'Interações deletadas com sucesso']);
+    }
 }
