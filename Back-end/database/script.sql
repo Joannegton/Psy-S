@@ -34,13 +34,13 @@ CREATE TABLE Interacao (
 );
 
 -- Criação da tabela de Conteúdo Educacional
-CREATE TABLE Conteudo_Educacional (
-    id_conteudo INT AUTO_INCREMENT PRIMARY KEY,
-    tipo ENUM('Artigo', 'Video') NOT NULL,
-    titulo VARCHAR(255) NOT NULL,
-    descricao TEXT,
-    link VARCHAR(255) NOT NULL
+CREATE TABLE Conteudos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    link TEXT,
+    tipo ENUM('article', 'video', 'meditation') NOT NULL
 );
+
 
 -- Criação da tabela de Profissionais
 CREATE TABLE Profissional (
