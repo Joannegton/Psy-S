@@ -98,7 +98,7 @@ class ContentController
      * Responde com um código 200 e uma mensagem de sucesso se o conteúdo for atualizado com sucesso,
      * ou um código 400 se os dados forem inválidos.
      */
-    public function updateAction(int $id): void
+    public function updateAction(): void
     {
         if ($_SERVER["REQUEST_METHOD"] !== 'PUT') {
             http_response_code(405);
@@ -121,6 +121,9 @@ class ContentController
             echo json_encode(['message' => 'Tipo de conteúdo inválido']);
             return;
         }
+
+        // Captura os parâmetros da URL
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
         $result = $this->contentModel->updateContent($id, $data['nome'], $data['link'], $type);
 
