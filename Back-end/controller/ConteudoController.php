@@ -142,13 +142,16 @@ class ContentController
      * Responde com um código 200 e uma mensagem de sucesso se o conteúdo for deletado com sucesso,
      * ou um código 404 se o conteúdo não for encontrado.
      */
-    public function deleteAction(int $id): void
+    public function deleteAction(): void
     {
         if ($_SERVER["REQUEST_METHOD"] !== 'DELETE') {
             http_response_code(405);
             echo json_encode(['message' => 'Método não permitido']);
             return;
         }
+
+        // Captura os parâmetros da URL
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
         $result = $this->contentModel->deleteContent($id);
 
