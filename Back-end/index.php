@@ -5,6 +5,8 @@ require_once __DIR__ . '/controller/InteracaoController.php';
 require_once __DIR__ . '/controller/UserController.php';
 require_once __DIR__ . '/service/Interacao.php';
 require_once __DIR__ . '/service/Usuario.php';
+require_once __DIR__ . '/service/Conteudo.php';
+require_once __DIR__ . '/controller/ConteudoController.php';
 
 // Habilitar Cabeçalhos CORS:
 header("Access-Control-Allow-Origin: *");
@@ -25,6 +27,8 @@ function getController(string $controllerName, PDO $pdo): ?object
             return new UserController(new Usuario($pdo));
         case 'interacoes':
             return new InteracaoController(new Interacao($pdo));
+        case 'conteudos':
+            return new ContentController(new Content($pdo));
         default:
             return null;
     }

@@ -1,18 +1,19 @@
 <?php
 require_once __DIR__ . '/../config/config.php'; 
+require_once __DIR__ . '/../service/Conteudo.php';
 
 class ContentController
 {
-    private $pdo;
+    private Content $contentModel;
 
     /**
      * Construtor da classe ContentController.
      * 
-     * @param PDO $pdo Instância do PDO para conexão com o banco de dados.
+     * @param Content $contentModel Instância do Content para injeção de dados
      */
-    public function __construct(PDO $pdo)
+    public function __construct(Content $contentModel)
     {
-        $this->pdo = $pdo;
+        $this->contentModel = $contentModel;
     }
 
     /**
@@ -45,15 +46,14 @@ class ContentController
             return;
         }
 
-        $stmt = $this->pdo->prepare("INSERT INTO conteudos (nome, link, tipo) VALUES (?, ?, ?)");
-        $result = $stmt->execute([$data['nome'], $data['link'], $type]);
+        $result = $this->contentModel->createContent($data['nome'], $data['link'], $type);
 
-        if ($result) {
+        if ($result === 'Conteúdo adicionado com sucesso!') {
             http_response_code(201);
-            echo json_encode(['message' => 'Conteúdo adicionado com sucesso']);
+            echo json_encode(['message' => $result]);
         } else {
             http_response_code(500);
-            echo json_encode(['message' => 'Erro ao adicionar o conteúdo']);
+            echo json_encode(['message' => $result]);
         }
     }
 
@@ -63,7 +63,7 @@ class ContentController
      * Responde com um código 200 e os dados do conteúdo se encontrado,
      * ou um código 404 se o conteúdo não for encontrado.
      */
-    public function getAction(int $id): void
+    public function getAction(): void
     {
         if ($_SERVER["REQUEST_METHOD"] !== 'GET') {
             http_response_code(405);
@@ -71,17 +71,25 @@ class ContentController
             return;
         }
 
-        $stmt = $this->pdo->prepare("SELECT * FROM conteudos WHERE id = ?");
-        $stmt->execute([$id]);
-        $content = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Captura os parâmetros da URL
+        $id_conteudo = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
-        if ($content) {
-            http_response_code(200);
-            echo json_encode($content);
-        } else {
-            http_response_code(404);
-            echo json_encode(['message' => 'Conteúdo não encontrado']);
+        if ($id_conteudo === null) {
+            http_response_code(400);
+            echo json_encode(['message' => 'ID do conteúdo não informado']);
+            return;
         }
+
+        $content = $this->contentModel->getContent($id_conteudo);
+
+        if (empty($content)) {
+            http_response_code(404);
+            echo json_encode(['message' => $content['error']]);
+        }
+        
+        http_response_code(200);
+        echo json_encode($content);
+        
     }
 
     /**
@@ -114,15 +122,14 @@ class ContentController
             return;
         }
 
-        $stmt = $this->pdo->prepare("UPDATE conteudos SET nome = ?, link = ?, tipo = ? WHERE id = ?");
-        $result = $stmt->execute([$data['nome'], $data['link'], $type, $id]);
+        $result = $this->contentModel->updateContent($id, $data['nome'], $data['link'], $type);
 
-        if ($result) {
+        if ($result === 'Conteúdo atualizado com sucesso!') {
             http_response_code(200);
-            echo json_encode(['message' => 'Conteúdo atualizado com sucesso']);
+            echo json_encode(['message' => $result]);
         } else {
             http_response_code(500);
-            echo json_encode(['message' => 'Erro ao atualizar o conteúdo']);
+            echo json_encode(['message' => $result]);
         }
     }
 
@@ -140,15 +147,14 @@ class ContentController
             return;
         }
 
-        $stmt = $this->pdo->prepare("DELETE FROM conteudos WHERE id = ?");
-        $result = $stmt->execute([$id]);
+        $result = $this->contentModel->deleteContent($id);
 
-        if ($result) {
+        if ($result === 'Conteúdo deletado com sucesso!') {
             http_response_code(200);
-            echo json_encode(['message' => 'Conteúdo deletado com sucesso']);
+            echo json_encode(['message' => $result]);
         } else {
             http_response_code(404);
-            echo json_encode(['message' => 'Conteúdo não encontrado']);
+            echo json_encode(['message' => $result]);
         }
     }
 
