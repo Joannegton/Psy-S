@@ -86,7 +86,10 @@ class Interacao
                 ':user_id' => $id_usuario,
                 ':therapist_id' => $id_terapeuta
             ]);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $todasMensagens = $stmt->fetchAll(PDO::FETCH_ASSOC); // Pega todas as mensagens
+
+            return $todasMensagens;
         } catch (PDOException $e) {
             // Log do erro para análise futura
             error_log($e->getMessage(), 3, __DIR__ . '/../logs/error.log');
