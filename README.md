@@ -19,7 +19,7 @@ O principal objetivo do projeto é oferecer um recurso acessível e confiável p
 ## Estrutura do Repositório
 
 - `/backend`: Contém o código-fonte da API do projeto.
-- `/frontend`: Contém o código-fonte da interface de usuario do projeto.
+- `/frontend`: Contém o código-fonte da interface de usuário do projeto, desenvolvido em Angular.
 - `/docs`: Documentação relacionada ao projeto, incluindo diagramas e rotas da API.
 - `/config`: Arquivos de configuração do ambiente de desenvolvimento.
 - `README.md`: Este arquivo, fornecendo uma visão geral do projeto.
