@@ -77,7 +77,7 @@ class UserController
 
         if (strpos($result, 'Erro') !== false) {
             http_response_code(500);
-            echo json_encode(['message' => $result]);
+            echo json_encode(['error' => 'Erro ao criar Usuario.']);
             return;
         }
 
@@ -86,7 +86,7 @@ class UserController
     }
 
     /**
-     * Atualiza um usuário.
+     * deleta um usuário.
      * 
      * Responde com um código 200 e uma mensagem de sucesso se o usuário for atualizado com sucesso,
      * ou um código 500 se ocorrer um erro ao atualizar o usuário.

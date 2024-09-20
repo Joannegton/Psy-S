@@ -46,9 +46,10 @@ CREATE TABLE Conteudos (
 CREATE TABLE Profissional (
     id_profissional INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    especialidade VARCHAR(100) NOT NULL,
-    telefone VARCHAR(20),
-    email VARCHAR(100)
+    email VARCHAR(100) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    cpf VARCHAR(100) NOT NULL,
+    crth VARCHAR(20)
 );
 
 -- Criação da tabela de Sugestões

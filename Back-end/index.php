@@ -7,6 +7,8 @@ require_once __DIR__ . '/service/Interacao.php';
 require_once __DIR__ . '/service/Usuario.php';
 require_once __DIR__ . '/service/Conteudo.php';
 require_once __DIR__ . '/controller/ConteudoController.php';
+require_once __DIR__ . '/service/Interacao.php';
+require_once __DIR__ . '/controller/ProfissionaisController.php';
 
 // Habilitar Cabeçalhos CORS:
 header("Access-Control-Allow-Origin: *");
@@ -29,6 +31,8 @@ function getController(string $controllerName, PDO $pdo): ?object
             return new InteracaoController(new Interacao($pdo));
         case 'conteudos':
             return new ContentController(new Content($pdo));
+        case 'profissional':
+            return new ProfissionaisController(new Profissionais($pdo));
         default:
             return null;
     }
@@ -37,6 +41,8 @@ function getController(string $controllerName, PDO $pdo): ?object
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = trim($uri, '/');
 $uriParts = explode('/', $uri);
+
+//localhost:8000/api/v1/serviço/metodo
 
 try {
     if (isset($uriParts[0]) && $uriParts[0] === 'api' && $uriParts[1] === 'v1') {
