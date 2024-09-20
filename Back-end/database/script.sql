@@ -50,6 +50,7 @@ CREATE TABLE Profissional (
     senha VARCHAR(255) NOT NULL,
     cpf VARCHAR(100) NOT NULL,
     crth VARCHAR(20)
+    estrelas DECIMAL(2,1) DEFAULT 0.0
 );
 
 -- Criação da tabela de Sugestões
