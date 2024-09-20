@@ -18,8 +18,9 @@ O principal objetivo do projeto é oferecer um recurso acessível e confiável p
 
 ## Estrutura do Repositório
 
-- `/src`: Contém o código-fonte do projeto, dividido em front-end e back-end.
-- `/docs`: Documentação relacionada ao projeto, incluindo diagramas e especificações.
+- `/backend`: Contém o código-fonte da API do projeto.
+- `/frontend`: Contém o código-fonte da interface de usuario do projeto.
+- `/docs`: Documentação relacionada ao projeto, incluindo diagramas e rotas da API.
 - `/config`: Arquivos de configuração do ambiente de desenvolvimento.
 - `README.md`: Este arquivo, fornecendo uma visão geral do projeto.
 
@@ -41,7 +42,7 @@ Este projeto é de código aberto e está licenciado sob os termos da [MIT Licen
 
 Para mais informações, você pode entrar em contato com os desenvolvedores:
 
+- **Wellington Tavares Galbarini** [wtg131998@gmail.com](mailto:wtg131998@gmail.com)
 - **Kayke dos Santos Oliveira**
-- **Wellington Tavares Galbarini**
 - **Wendel Carbonesi**
 
