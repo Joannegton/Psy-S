@@ -1,0 +1,22 @@
+.container__output {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    border: 1px solid #ccc;
+  }
+  
+  .left {
+    align-self: flex-start;
+    background-color: #f10f0f;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+  
+  .right {
+    align-self: flex-end;
+    background-color: #0a804b;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }

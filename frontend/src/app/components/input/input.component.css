@@ -1,0 +1,16 @@
+div{
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+label{
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+input{
+    padding: 10px 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    margin-top: 5px;
+}

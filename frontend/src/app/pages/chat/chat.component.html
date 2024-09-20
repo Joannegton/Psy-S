@@ -1,0 +1,4 @@
+<div class="container__card">
+    <app-chat-output #chatOutput></app-chat-output>
+    <app-chat-input (messageSent)="chatOutput.loadMessages()"></app-chat-input>
+  </div>

@@ -1,0 +1,7 @@
+<div>
+    <label for="descricao">{{descricao}}</label>
+    <input type="{{tipo}}" name="descricao" id="entradaTexto" [formControl]="name">
+    <p>texto: {{name.value}}</p>
+
+    <button type="button" (click)="updateName()">Update Name</button>
+</div>

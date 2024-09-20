@@ -1,0 +1,8 @@
+<form (ngSubmit)="sendMessage()">
+    <div class="container__input">
+      <input type="text" placeholder="Type a message" [(ngModel)]="message" name="message" />
+    </div>
+    <div class="container__button">
+      <button type="submit">Send</button>
+    </div>
+  </form>

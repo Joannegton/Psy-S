@@ -1,0 +1,5 @@
+<div class="container__output">
+  <div *ngFor="let message of messages" [ngClass]="{'left': message.tipo === 'Terapeuta', 'right': message.tipo === 'Usuario'}">
+    <p>{{ message.mensagem }}</p>
+  </div>
+</div>
