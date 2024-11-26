@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%; /* Garante que o body ocupe 100% da altura da tela */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right,  #c2f3cd, #71d8e7, #48b1c2);
+  color: #333;
+  display: flex;
+  flex-direction: column; /* Para empurrar o footer para o final */
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  background-color: linear-gradient(135deg, #d1eae8, #74868f);
+  height: 80px;
+}
+
+.logo img {
+  height: 80px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 15rem;
+}
+
+nav ul h1 {
+  color: #ffffff;
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+nav a {
+  text-decoration: none;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 100px auto 60px; /* Ajustando a margem para centralizar o container */
+  padding: 0 2rem; /* Adicionando o mesmo espaçamento lateral que o navbar */
+  flex: 1;
+  width: calc(100% - 4rem); /* Isso garante que o conteúdo ocupe a largura total da tela menos a margem */
+}
+
+.card {
+  background-color: #fff;
+  width: 180px;
+  height: 260px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 12px #aaaaaa;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+}
+
+.card div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 0.5rem;
+  flex-grow: 1;
+}
+
+.card h1 {
+  font-size: 1.2rem;
+}
+
+.card h2 {
+  font-size: 0.9rem;
+  color: #aaaaaa;
+}
+
+.card button {
+  background-color: #2192FF;
+  height: 30px;
+  border: none;
+  padding: 4px;
+  width: 80%;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.card button:hover {
+  background-color: #137de8;
+}
+
+footer {
+  text-align: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #666;
+  border-top: 1px solid #ddd;
+  font-size: 14px;
+}

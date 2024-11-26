@@ -1,0 +1,115 @@
+html, body {
+  margin: 0; /* Remove qualquer margem padrão */
+  padding: 0; /* Remove qualquer preenchimento padrão */
+  height: 100%; /* Garante que o corpo ocupe 100% da altura da janela */
+  overflow: hidden; /* Desabilita as barras de rolagem */
+}
+
+body {
+  background-image: linear-gradient(to right, #c2f3cd48, #71d7e762, #48b2c263), url(img/login-fundo.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* A imagem ficará fixa ao rolar */
+  font-family: 'Arial', sans-serif; /* Estilo básico para o corpo */
+  color: #333;
+}
+
+
+
+.titulo {
+  font-size: 350%;
+  color: #000000; 
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-top: 50px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Adicionando sombra ao texto */
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com transparência */
+  padding: 2rem;
+  width: 35%; /* Largura maior para melhorar a leitura */
+  border-radius: 12px; /* Bordas arredondadas */
+  margin: 10% auto; /* Centraliza a container */
+  font-family: "Comfortaa", sans-serif;
+  text-align: center; /* Alinha o conteúdo ao centro */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para o container */
+}
+
+.container input[type="text"],
+.container input[type="email"],
+.container input[type="password"],
+.container textarea {
+  width: 100%; 
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #9dc8ce; 
+  border-radius: 6px; 
+  background-color: rgba(204, 201, 201, 0.2); 
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1); 
+  font-size: 1em;
+  color: #333; 
+}
+
+.container input[type="text"]:focus,
+.container input[type="email"]:focus,
+.container input[type="password"]:focus {
+  border-color: #2296a5; /* Foco no campo com cor */
+  outline: none;
+  background-color: rgba(204, 201, 201, 0.4);
+}
+
+.botao {
+  padding: 14px;
+  width: 100%;
+  border-radius: 6px;
+  transition: 0.5s all;
+  background-color: #9dc8ce;
+  font-size: 110%;
+  font-family: "Comfortaa", sans-serif;
+  margin-top: 15px;
+  cursor: pointer; /* Mostra o cursor como pointer */
+  text-align: center;
+  border: none;
+}
+
+.botao:hover {
+  background-color: #40c5d6; /* Efeito hover */
+  transform: scale(1.05); /* Aumenta o botão ao passar o mouse */
+}
+
+.cadastrar {
+  margin-top: 20px;
+  font-size: 120%;
+  color: #04505a;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none; /* Remove o sublinhado */
+  cursor: pointer;
+}
+
+.cadastrar:hover {
+  text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+  color: #2296a5;
+}
+
+footer {
+  background-color: #f3e9e8;
+  text-align: center;
+  padding: 10px;
+  margin-top: 30px;
+  color: #333;
+  font-size: 0.9em;
+  font-family: 'Arial', sans-serif;
+}
+
+footer a {
+  color: #2296a5;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,150 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right,  #c2f3cd, #71d8e7, #48b1c2);
+  color: #333;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  background-color: linear-gradient(135deg, #d1eae8, #74868f);
+  height: 80px;
+}
+
+.logo img {
+  height: 80px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 15rem;
+}
+
+nav ul h1 {
+  color: #ffffff;
+  font-family: "Comfortaa", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+nav a {
+  text-decoration: none;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+main {
+  text-align: center;
+  padding: 10px 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+  margin-top: 10%;
+}
+
+.hero{
+  background: #3333330c;
+  padding: 10px 15px;
+  border-radius: 10%;
+}
+
+.hero h1 {
+  font-size: 36px;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+.hero p{
+  font-size: 20px;
+  line-height: 1.5;
+  color: #ffffff;
+  text-align: justify;
+  margin-left: 2%;
+}
+
+.cta-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background: linear-gradient(to right,  #c2f3cd, #71d8e7, #48b1c2);
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #ffffff;
+}
+
+/* Images Section */
+.images {
+  display: flex;
+  align-items: center; /* Alinha os itens verticalmente */
+  gap: 50px; /* Espaço entre os elementos */
+  margin-left: 180px;
+}
+
+.circle-container {
+  display: flex;
+  flex-direction: column; /* Alinha os círculos em coluna */
+  gap: 10px; /* Espaço entre os círculos */
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+  background-color: #caf0f8;
+  border-radius: 50%;
+  overflow: hidden; /* Garante que a imagem não saia do contêiner circular */
+}
+
+.circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Faz a imagem cobrir todo o espaço do círculo */
+}
+
+.rectangle {
+  width: 200px;
+  height: 400px;
+  background-color: #caf0f8;
+  border-radius: 10px;
+  overflow: hidden; /* Garante que a imagem não saia do contêiner retangular */
+}
+
+.rectangle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Faz a imagem cobrir todo o espaço do retângulo */
+}
+
+
+/* Rodapé */
+footer {
+  text-align: center;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #666;
+  border-top: 1px solid #ddd;
+  font-size: 14px;
+  margin-top: 11.5%;
+}
