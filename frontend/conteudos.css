@@ -60,7 +60,7 @@ nav a {
   gap: 1rem;
   justify-content: space-between;
   align-items: flex-start;
-  margin: 100px auto 60px; /* Ajustando a margem para centralizar o container */
+  margin: 10px auto 10px; /* Ajustando a margem para centralizar o container */
   padding: 0 2rem; /* Adicionando o mesmo espaçamento lateral que o navbar */
   flex: 1;
   width: calc(100% - 4rem); /* Isso garante que o conteúdo ocupe a largura total da tela menos a margem */
