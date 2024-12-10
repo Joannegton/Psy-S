@@ -10,7 +10,8 @@ Todos os endpoints estão disponíveis sob o caminho `/api/v1/`.
 
 ### 1. Criar Usuário
 
-- **Endpoint:** `/api/v1/usuarios/create`
+- **Endpoint:** `
+`
 - **Método:** `POST`
 - **Descrição:** Cria um novo usuário.
 - **Parâmetros do Corpo da Requisição:**
@@ -43,7 +44,7 @@ Todos os endpoints estão disponíveis sob o caminho `/api/v1/`.
 
 ### 2. Listar Usuários
 
-- **Endpoint:** `/api/v1/usuarios/list`
+- **Endpoint:** `/api/v1/users/list`
 - **Método:** `GET`
 - **Descrição:** Lista todos os usuários.
 - **Respostas:**
@@ -68,7 +69,7 @@ Todos os endpoints estão disponíveis sob o caminho `/api/v1/`.
 
 ### 3. Deletar Usuário
 
-- **Endpoint:** `/api/v1/usuarios/delete`
+- **Endpoint:** `/api/v1/users/delete`
 - **Método:** `DELETE`
 - **Descrição:** Deleta um usuário.
 - **Parâmetros do Corpo da Requisição:**
@@ -96,7 +97,7 @@ Todos os endpoints estão disponíveis sob o caminho `/api/v1/`.
 
 ### 4. Login de Usuário
 
-- **Endpoint:** `/api/v1/usuarios/login`
+- **Endpoint:** `/api/v1/users/login`
 - **Método:** `POST`
 - **Descrição:** Faz login de um usuário.
 - **Parâmetros do Corpo da Requisição:**

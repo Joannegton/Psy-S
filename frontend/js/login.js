@@ -10,12 +10,12 @@ async function loginUser(event) {
 
     if (email !== "" && password !== "") {
         try {
-            const response = await fetch('http://localhost:8000/api/v1/auth/Usuarios/login', {
+            const response = await fetch('http://localhost:8000/api/v1/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, senha: password }),
             });
 
             const data = await response.json(); // Processa a resposta da API
@@ -27,7 +27,7 @@ async function loginUser(event) {
 
                 // Exemplo de redirecionamento
                 // localStorage.setItem('userData', JSON.stringify(data.user));
-                // window.location.href = '/dashboard.html';
+                window.location.href = '../chat.html';
             } else {
                 // Exibe mensagem de erro retornada pela API
                 document.getElementById('responseMessage').innerText = data.error || 'Erro ao realizar login.';

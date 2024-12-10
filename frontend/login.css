@@ -39,10 +39,28 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para o container */
 }
 
+.container-login{
+  background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com transparência */
+  padding: 2rem;
+  width: 35%; /* Largura maior para melhorar a leitura */
+  border-radius: 12px; /* Bordas arredondadas */
+  position: absolute; /* Centraliza a container */
+  top: 50%; /* Posiciona o container no meio da tela */
+  left: 50%; /* Posiciona o container no meio da tela */
+  transform: translate(-50%, -50%); /* Centraliza o container */
+  font-family: "Comfortaa", sans-serif;
+  text-align: center; /* Alinha o conteúdo ao centro */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra para o container */
+
+}
 .container input[type="text"],
 .container input[type="email"],
 .container input[type="password"],
-.container textarea {
+.container textarea, 
+.container-login input[type="text"],
+.container-login input[type="email"],
+.container-login input[type="password"],
+.container-login textarea {
   width: 100%; 
   padding: 12px;
   margin-bottom: 20px;
@@ -56,7 +74,10 @@ body {
 
 .container input[type="text"]:focus,
 .container input[type="email"]:focus,
-.container input[type="password"]:focus {
+.container input[type="password"]:focus, 
+.container-login input[type="text"]:focus,
+.container-login input[type="email"]:focus,
+.container-login input[type="password"]:focus {
   border-color: #2296a5; /* Foco no campo com cor */
   outline: none;
   background-color: rgba(204, 201, 201, 0.4);

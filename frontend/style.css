@@ -56,11 +56,11 @@ main {
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   align-items: center;
-  margin-top: 10%;
+  margin-top: 40px;
 }
 
 .hero{
-  background: #3333330c;
+  background: #3333336e;
   padding: 10px 15px;
   border-radius: 10%;
 }
@@ -84,7 +84,8 @@ main {
   padding: 10px 20px;
   font-size: 16px;
   background: linear-gradient(to right,  #c2f3cd, #71d8e7, #48b1c2);
-  color: #ffffff;
+  color: black;
+  font-weight: bold;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -146,5 +147,7 @@ footer {
   color: #666;
   border-top: 1px solid #ddd;
   font-size: 14px;
-  margin-top: 11.5%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
