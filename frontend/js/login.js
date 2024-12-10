@@ -10,7 +10,7 @@ async function loginUser(event) {
 
     if (email !== "" && password !== "") {
         try {
-            const response = await fetch('http://localhost:8000/api/v1/users/login', {
+            const response = await fetch('https://38da-45-179-106-136.ngrok-free.app/api/v1/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ async function loginUser(event) {
 
                 // Exemplo de redirecionamento
                 // localStorage.setItem('userData', JSON.stringify(data.user));
-                window.location.href = '../chat.html';
+                window.location.href = 'chat.html';
             } else {
                 // Exibe mensagem de erro retornada pela API
                 document.getElementById('responseMessage').innerText = data.error || 'Erro ao realizar login.';
