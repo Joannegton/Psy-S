@@ -16,7 +16,7 @@ async function sendMessage() {
             const user_id = 1;
             const psy_id = 'psy172681618233837';
 
-            const response = await fetch('https://38da-45-179-106-136.ngrok-free.app/api/v1/interacoes/send', {
+            const response = await fetch('https://54a0-45-179-106-136.ngrok-free.app/api/v1/interacoes/send', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ async function getMessages() {
     const psy_id = 'psy172681618233837';
 
     try {
-        const response = await fetch(`https://38da-45-179-106-136.ngrok-free.app/api/v1/interacoes/list?id_usuario=${user_id}&id_terapeuta=${psy_id}`)
+        const response = await fetch(`https://54a0-45-179-106-136.ngrok-free.app/api/v1/interacoes/list?id_usuario=${user_id}&id_terapeuta=${psy_id}`)
 
         if(!response.ok){
             throw new Error('Erro ao carregar mensagens.')

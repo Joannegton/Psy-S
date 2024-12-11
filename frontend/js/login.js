@@ -15,7 +15,7 @@ async function loginUser(event) {
 
     if (email !== "" && password !== "") {
         try {
-            const response = await fetch('https://38da-45-179-106-136.ngrok-free.app/api/v1/users/login', {
+            const response = await fetch('https://54a0-45-179-106-136.ngrok-free.app/api/v1/users/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

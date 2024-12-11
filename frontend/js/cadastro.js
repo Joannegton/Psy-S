@@ -6,7 +6,7 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
     const senha = event.target.senha.value;
 
     try {
-        const response = await fetch('https://38da-45-179-106-136.ngrok-free.app/api/v1/users/create', {
+        const response = await fetch('https://54a0-45-179-106-136.ngrok-free.app/api/v1/users/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
