@@ -86,7 +86,7 @@ async function getMessages() {
                 document.querySelector('.messages').appendChild(messageDiv);
             }
         });            
-
+ 
     } catch (error) {
         console.error(error)
         alert(error)

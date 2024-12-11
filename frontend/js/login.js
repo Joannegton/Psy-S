@@ -1,3 +1,8 @@
+const userData = localStorage.getItem('userData');
+if (userData) {
+    window.location.href = 'chat.html';
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('loginForm').addEventListener('submit', loginUser);
 });
@@ -23,10 +28,9 @@ async function loginUser(event) {
             if (response.ok) {
                 // Exibe mensagem de sucesso e redireciona
                 document.getElementById('responseMessage').innerText = 'Login realizado com sucesso!';
-                console.log('Dados do usuário:', data.user);
+                console.log('Dados do usuário:', data);
 
-                // Exemplo de redirecionamento
-                // localStorage.setItem('userData', JSON.stringify(data.user));
+                localStorage.setItem('userData', JSON.stringify(data));
                 window.location.href = 'chat.html';
             } else {
                 // Exibe mensagem de erro retornada pela API
